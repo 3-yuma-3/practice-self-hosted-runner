@@ -10,7 +10,8 @@ permissions:
 jobs:
   actionlint:
     # runs-on: ubuntu-slim
-    runs-on: arm64-ubuntu2604
+    # runs-on: arm64-ubuntu2604
+    runs-on: arc-runner-set
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
