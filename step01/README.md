@@ -35,4 +35,5 @@
     - `.env` の token の更新
     - `docker compose up -d --build --force-recreate` での再buildが必要
   - down したまま14日間経過するとGitHub側で自動削除されるため、新しい runner としての再登録手順に従う
+  - Dockerfile の修正だけなら `docker compose up -d --build --force-recreate` で済む
 - runner 登録用 token の期限は1時間

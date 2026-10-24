@@ -19,18 +19,6 @@ jobs:
       #       sudo apt-get update && sudo apt-get install -y --no-install-recommends \
       #         curl ca-certificates
 
-      # debug
-      - name: inspect checkout
-        run: |
-          printf 'cwd=%s\nworkspace=%s\n' "$PWD" "$GITHUB_WORKSPACE"
-          for path in .git .github/workflows; do
-            if [ -e "$path" ]; then
-              ls -ld "$path"
-            else
-              echo "MISSING: $path"
-            fi
-          done
-          git rev-parse --show-toplevel || true
       - name: download actionlint
         id: get_actionlint
         # 1.7.12
