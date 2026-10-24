@@ -84,3 +84,32 @@
 - github上で `Settings > Actions > Runners` に `arc-runner-set` が表示されていることを確認
 - pod の autoscale を確認するため、 `kubectl get pods -n arc-runners -w` を打っておいて、actions を複数同時に動かす
   - 例えば、複数actionsを定義しているrepoでpushするなど
+
+  <details><summary>折りたたみ</summary>
+
+  ```sh
+  # push 前は minRunners: 1 なので1つ Running。
+  # pushすると maxRunners: 2 なのでもう一つが自動起動。
+  # 2つのactionsが実行完了すると minRunners: 1 の1つが Running でjobを待機している。
+  ❯ kubectl get pods -n arc-runners -w
+  NAME                          READY   STATUS    RESTARTS   AGE
+  arc-runner-set-runner-78mpx   1/1     Running   0          28m
+  arc-runner-set-runner-5w268   0/1     Pending   0          0s
+  arc-runner-set-runner-5w268   0/1     Pending   0          0s
+  arc-runner-set-runner-5w268   0/1     ContainerCreating   0          0s
+  arc-runner-set-runner-5w268   0/1     ContainerCreating   0          1s
+  arc-runner-set-runner-5w268   1/1     Running             0          2s
+  arc-runner-set-runner-78mpx   0/1     Completed           0          29m
+  arc-runner-set-runner-78mpx   0/1     Terminating         0          29m
+  arc-runner-set-runner-78mpx   0/1     Terminating         0          29m
+  arc-runner-set-runner-5w268   0/1     Completed           0          20s
+  arc-runner-set-runner-5w268   0/1     Terminating         0          20s
+  arc-runner-set-runner-5w268   0/1     Terminating         0          20s
+  arc-runner-set-runner-2857f   0/1     Pending             0          0s
+  arc-runner-set-runner-2857f   0/1     Pending             0          0s
+  arc-runner-set-runner-2857f   0/1     ContainerCreating   0          0s
+  arc-runner-set-runner-2857f   0/1     ContainerCreating   0          0s
+  arc-runner-set-runner-2857f   1/1     Running             0          1s
+  ```
+
+  </details>
