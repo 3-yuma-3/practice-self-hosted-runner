@@ -113,3 +113,6 @@
   ```
 
   </details>
+
+- この repo の `mdlint` は `setup-node` を使用しているが、arc image をカスタマイズする必要があるので、step02では `mdlint` は落ちたまま
+  - `actionlint` も `sudo` の `run` をコメントアウトしたままだと動いたが、外したら落ちるかどうかはわからない
