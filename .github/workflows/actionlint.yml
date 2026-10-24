@@ -1,0 +1,28 @@
+---
+name: actionlint
+"on":
+  pull_request:  # PRのpreview merge commitで実行
+  workflow_dispatch: # 手動実行
+
+permissions:
+  contents: read
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - run: |
+            sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+              curl ca-certificates
+
+      - name: download actionlint
+        id: get_actionlint
+        # 1.7.12
+        run: bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/914e7df21a07ef503a81201c76d2b11c789d3fca/scripts/download-actionlint.bash)
+        shell: bash
+
+      - name: check workflow files
+        run: ${{ steps.get_actionlint.outputs.executable }} -color
+        shell: bash
