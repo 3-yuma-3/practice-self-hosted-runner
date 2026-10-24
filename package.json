@@ -1,0 +1,24 @@
+{
+  "name": "practice-self-hosted-runner",
+  "version": "1.0.0",
+  "description": "- [practice-self-hosted-runner](#practice-self-hosted-runner)   - [目次](#目次)   - [目的](#目的)   - [ディレクトリ構成](#ディレクトリ構成)",
+  "homepage": "https://github.com/3-yuma-3/practice-self-hosted-runner#readme",
+  "bugs": {
+    "url": "https://github.com/3-yuma-3/practice-self-hosted-runner/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3-yuma-3/practice-self-hosted-runner.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "lint:md": "markdownlint-cli2 '**/*.md'",
+    "lint:md:fix": "markdownlint-cli2 --fix '**/*.md'"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "0.24.0"
+  }
+}
