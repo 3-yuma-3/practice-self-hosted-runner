@@ -10,8 +10,10 @@ RUN apt-get -y update && apt-get upgrade -y
 # Dockerfile 内でも sudo は install しないし、 runner 自体も 非root なので、
 #  actions 内で必要になる package は Dockerfile 内で install しておく必要がある。
 # libatomic1 は setup-node に必要。
+# ca-certificates は actionlint の binary 取得に必要
 RUN apt-get install -y curl \
-    libatomic1
+    libatomic1 \
+    ca-certificates
 
 RUN useradd --create-home runner
 
