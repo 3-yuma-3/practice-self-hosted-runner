@@ -21,6 +21,9 @@
 - docker container を起動する
 - repo の `Settings > Actions > Runners` から起動した docker container が self-hosted runner として登録されたことを確認する
 - runner に付与した label を、 actions の `runs-on` で指定する
+- actions を実行するのに足りない package は dockerfile に追加して通るようにする
+  - 強すぎる権限を避けるため、 dockerfile 内で sudo は installしない。
+  - そのため actions 内で sudo も使えない。
 
 ## memo
 
