@@ -5,3 +5,5 @@ minimum_release_age = "7d"  # default is 24h
 
 [tools]
 node = "26.12.1"
+
+pinact = "5.0.1"
