@@ -20,6 +20,7 @@
     - この repo の実装内容はあくまで参考程度
 - docker container を起動する
 - repo の `Settings > Actions > Runners` から起動した docker container が self-hosted runner として登録されたことを確認する
+- runner に付与した label を、 actions の `runs-on` で指定する
 
 ## memo
 
