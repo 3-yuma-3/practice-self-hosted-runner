@@ -1,0 +1,21 @@
+services:
+  arm64-ubuntu2604:
+    build:
+      context: .
+      dockerfile: arm64.Dockerfile
+      platforms:
+        - linux/arm64
+      args:
+        # https://github.com/actions/runner/releases
+        RUNNER_VERSION: "2.338.1"
+        RUNNER_SHA256: "475e0c149fd3b611610127b9664ba5bacf5c6928795cc448ab520bb5f324bede"
+    container_name: arm64-ubuntu2604-self-hosted-runner
+    env_file:
+      - .env
+    environment:
+      RUNNER_NAME: "arm64-ubuntu2604"
+    volumes:
+      - arm64-ubuntu2604-data:/home/runner/actions-runner
+
+volumes:
+  arm64-ubuntu2604-data:
