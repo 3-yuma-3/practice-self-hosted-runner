@@ -4,67 +4,10 @@
 
 # Disable some built-in rules
 config:
-  no-trailing-spaces: false
-  no-multiple-blanks: false
-
-# Include a custom rule package
-customRules:
-  - markdownlint-rule-extended-ascii
-
-# Fix any fixable errors
-fix: true
-
-# Define a custom front matter pattern
-frontMatter: "<head>[\\s\\S]*<\/head>"
+  # https://github.com/markdownlint/markdownlint/blob/cf7e1fc7f63c802a92f1d2f0400aeedb33f21688/docs/RULES.md
+  no-trailing-spaces: false # MD009
+  line-length: false # MD013 気にしない
+  no-inline-html: false  # MD033 折りたたみなどはhtmlを使わざるを得ないため
 
 # Ignore files referenced by .gitignore (only valid at root)
 gitignore: true
-
-# Define glob expressions to use (only valid at root)
-globs:
-  - "!*bout.md"
-
-# Define glob expressions to ignore
-ignores:
-  - "ignore*.md"
-
-# Use a plugin to recognize math
-markdownItPlugins:
-  -
-    - "markdown-it-emoji/dist/light.cjs.js"
-
-# Additional paths to resolve module locations from
-modulePaths:
-  - "./modules"
-
-# Disable banner message on stdout (only valid at root)
-noBanner: true
-
-# Disable inline config comments
-noInlineConfig: true
-
-# Disable progress on stdout (only valid at root)
-noProgress: true
-
-# Use a specific formatter (only valid at root)
-outputFormatters:
-  -
-    - markdownlint-cli2-formatter-default
-
-# Disable different rules for some files
-overrides:
-  # Add another rule for CHANGELOG.md
-  - filter:
-      - "CHANGELOG.md"
-    config:
-      no-duplicate-heading: false
-    combine: merge
-  # Reset customizations for doc/test directories
-  - filter:
-      - "doc/*.md"
-      - "test/*.md"
-    config: {}
-    combine: replace
-
-# Show found files on stdout (only valid at root)
-showFound: true
