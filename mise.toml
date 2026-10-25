@@ -1,4 +1,4 @@
-min_version = { hard = "2026.10.18"}
+min_version = { hard = "2026.10.19"}
 
 [settings]
 minimum_release_age = "7d"  # default is 24h
