@@ -109,3 +109,114 @@
 - 複数の Dockerfile を一括で build するための `docker-bake.hcl` を実装する
 - bake で build するための actions を実装する
 - bake での build が通ったら、 bake で build & publish するための actions を実装する
+- publish できたら、 実装した Dockerfile 毎に `values.yml` を実装する
+- `helm list -n arc-runners` で今の chart version を確認する。
+  - `CHART=gha-runner-scale-set-x.y.z`
+- `helm upgrade` の様子を見るために `kubectl get pods -n arc-runners -w` を打っておく
+- それぞれの `values.yml` を `helm upgrade` する
+
+  ```sh
+  helm upgrade --install arc-runner-xxx \
+    oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set \
+    --namespace arc-runners \
+    --version <現在のチャートバージョンのx.y.z部分> \
+    --values step04/helm/arc-runner-xxx-values.yml
+  ```
+
+  <details><summary>折りたたみ</summary>
+
+  ```sh
+  ❯ helm upgrade --install arc-runner-debian \
+    oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set \
+    --namespace arc-runners \
+    --version 0.15.1 \
+    --values step04/helm/arc-runner-debian-values.yml
+  Release "arc-runner-debian" does not exist. Installing it now.
+  NAME: arc-runner-debian
+  NAMESPACE: arc-runners
+  STATUS: deployed
+  REVISION: 1
+  DESCRIPTION: Install complete
+  TEST SUITE: None
+  NOTES:
+  Thank you for installing gha-runner-scale-set.
+
+  Your release is named arc-runner-debian.
+
+  ❯ helm upgrade --install arc-runner-setup-node \
+    oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set \
+    --namespace arc-runners \
+    --version 0.15.1 \
+    --values step04/helm/arc-runner-setup-node-values.yml
+  Release "arc-runner-setup-node" does not exist. Installing it now.
+  NAME: arc-runner-setup-node
+  NAMESPACE: arc-runners
+  STATUS: deployed
+  REVISION: 1
+  DESCRIPTION: Install complete
+  TEST SUITE: None
+  NOTES:
+  Thank you for installing gha-runner-scale-set.
+
+  Your release is named arc-runner-setup-node.
+
+  ❯ helm upgrade --install arc-runner-setup-python \
+    oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set \
+    --namespace arc-runners \
+    --version 0.15.1 \
+    --values step04/helm/arc-runner-setup-python-values.yml
+  Release "arc-runner-setup-python" does not exist. Installing it now.
+  NAME: arc-runner-setup-python
+  NAMESPACE: arc-runners
+  STATUS: deployed
+  REVISION: 1
+  DESCRIPTION: Install complete
+  TEST SUITE: None
+  NOTES:
+  Thank you for installing gha-runner-scale-set.
+
+  Your release is named arc-runner-setup-python.
+  ```
+
+  </details>
+
+  <details><summary>折りたたみ</summary>
+
+  ```sh
+  ❯ kubectl get pods -n arc-runners -w
+  NAME                          READY   STATUS    RESTARTS   AGE
+  arc-runner-set-runner-p9gfw   1/1     Running   0          23m
+  arc-runner-debian-runner-8lrkt   0/1     Pending   0          0s
+  arc-runner-debian-runner-8lrkt   0/1     Pending   0          0s
+  arc-runner-debian-runner-8lrkt   0/1     ContainerCreating   0          0s
+  arc-runner-debian-runner-8lrkt   0/1     ContainerCreating   0          1s
+  arc-runner-debian-runner-8lrkt   1/1     Running             0          26s
+  arc-runner-setup-node-runner-qcglw   0/1     Pending             0          0s
+  arc-runner-setup-node-runner-qcglw   0/1     Pending             0          0s
+  arc-runner-setup-node-runner-qcglw   0/1     ContainerCreating   0          0s
+  arc-runner-setup-node-runner-qcglw   0/1     ContainerCreating   0          0s
+  arc-runner-setup-node-runner-qcglw   1/1     Running             0          8s
+  arc-runner-setup-python-runner-57lmv   0/1     Pending             0          0s
+  arc-runner-setup-python-runner-57lmv   0/1     Pending             0          0s
+  arc-runner-setup-python-runner-57lmv   0/1     ContainerCreating   0          0s
+  arc-runner-setup-python-runner-57lmv   0/1     ContainerCreating   0          1s
+  arc-runner-setup-python-runner-57lmv   1/1     Running             0          14s
+  ```
+
+  </details>
+
+  <details><summary>折りたたみ</summary>
+
+  ```sh
+  ❯ kubectl get pods -n arc-runners
+  NAME                                   READY   STATUS    RESTARTS   AGE
+  arc-runner-debian-runner-8lrkt         1/1     Running   0          97s
+  arc-runner-set-runner-p9gfw            1/1     Running   0          25m
+  arc-runner-setup-node-runner-qcglw     1/1     Running   0          66s
+  arc-runner-setup-python-runner-57lmv   1/1     Running   0          47s
+  ```
+
+  </details>
+
+- github上でそれぞれの `arc-runner-xxx` が runner として認識されていることを確認する
+- それぞれの custom runner image で実行する actions を実装する

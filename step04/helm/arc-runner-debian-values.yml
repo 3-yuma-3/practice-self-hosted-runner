@@ -1,0 +1,14 @@
+githubConfigUrl: "https://github.com/3-yuma-3/practice-self-hosted-runner"
+githubConfigSecret: "pre-defined-secret"
+runnerScaleSetName: "arc-runner-debian"
+minRunners: 1
+maxRunners: 2
+template:
+  spec:
+    containers:
+      - name: runner
+        image: "ghcr.io/3-yuma-3/arc-runner-debian:sha-a34a68b"
+        imagePullPolicy: IfNotPresent
+        command: ["/home/runner/run.sh"]
+    imagePullSecrets:
+      - name: ghcr-pull-secret
