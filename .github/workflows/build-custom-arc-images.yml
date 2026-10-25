@@ -17,10 +17,6 @@ jobs:
           driver: kubernetes
           driver-opts: namespace=buildkit,qemu.install=true
 
-      # qemu によって linux/amd64, linux/arm64 両方に対応できるようになっていることを確認する
-      - name: Check builder platforms
-        run: docker buildx inspect --bootstrap
-
       - uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
         with:
           files: step04/arc-custom-images/docker-bake.hcl

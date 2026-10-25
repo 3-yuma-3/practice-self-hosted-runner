@@ -15,7 +15,13 @@ variable "RUNNER_SHA256_ARM64" {
   default = "475e0c149fd3b611610127b9664ba5bacf5c6928795cc448ab520bb5f324bede"
 }
 
+// actions での push 時に metadata が付与される
+target "metadata-debian" {}
+target "metadata-setup-node" {}
+target "metadata-setup-python" {}
+
 target "debian" {
+  inherits = [ "metadata-debian" ]
   context    = "step04/arc-custom-images"
   dockerfile = "debian.Dockerfile"
   platforms  = ["linux/amd64", "linux/arm64"]
@@ -28,12 +34,14 @@ target "debian" {
 }
 
 target "setup-node" {
+  inherits = [ "metadata-setup-node" ]
   context = "step04/arc-custom-images"
   dockerfile = "setup-node.Dockerfile"
   platforms = [ "linux/amd64", "linux/arm64" ]
 }
 
 target "setup-python" {
+  inherits = [ "metadata-setup-python" ]
   context = "step04/arc-custom-images"
   dockerfile = "setup-python.Dockerfile"
   platforms = [ "linux/amd64", "linux/arm64" ]

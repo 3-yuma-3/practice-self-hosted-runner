@@ -15,6 +15,7 @@
 - [RBAC認可を使用する](https://kubernetes.io/ja/docs/reference/access-authn-authz/rbac/)
 - [actions/actions-runner-controller/runner/actions-runner.ubuntu-24.04.dockerfile](https://github.com/actions/actions-runner-controller/blob/23159a8e2d70ca4cece740fe43a8d9eb0c2818de/runner/actions-runner.ubuntu-24.04.dockerfile)
 - [Bake](https://docs.docker.com/build/bake/)
+- [Add image annotations with GitHub Actions](https://docs.docker.com/build/ci/github-actions/annotations/)
 
 ## 前提
 
@@ -107,3 +108,4 @@
 - bake で build する用の custom runner image の Dockerfile を実装する
 - 複数の Dockerfile を一括で build するための `docker-bake.hcl` を実装する
 - bake で build するための actions を実装する
+- bake での build が通ったら、 bake で build & publish するための actions を実装する
