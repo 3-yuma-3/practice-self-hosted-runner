@@ -7,7 +7,7 @@ template:
   spec:
     containers:
       - name: runner
-        image: "ghcr.io/3-yuma-3/arc-runner-debian:sha-a34a68b"
+        image: "ghcr.io/3-yuma-3/arc-runner-debian:sha-fe95a04"
         imagePullPolicy: IfNotPresent
         command: ["/home/runner/run.sh"]
     imagePullSecrets:
