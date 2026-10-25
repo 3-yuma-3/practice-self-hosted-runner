@@ -1,6 +1,6 @@
 name: buildkit-sample
 "on":
-  pull_request:
+  # pull_request: # step04 で bake を導入する前の動作確認に一時的に使用した。その後はPR毎での実行は不要になった。
   workflow_dispatch:
 
 permissions:
