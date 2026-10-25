@@ -11,7 +11,7 @@ jobs:
   markdownlint:
     # runs-on: ubuntu-slim
     # runs-on: arm64-ubuntu2604
-    runs-on: arc-runner-set
+    runs-on: arc-runner-setup-node
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 

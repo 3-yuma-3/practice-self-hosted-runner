@@ -1,3 +1,6 @@
 self-hosted-runner:
   labels:
     - arc-runner-set
+    - arc-runner-debian
+    - arc-runner-setup-node
+    - arc-runner-setup-python
