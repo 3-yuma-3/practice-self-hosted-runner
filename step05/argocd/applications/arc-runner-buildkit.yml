@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: arc-runner-buildkit
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: ghcr.io/actions/actions-runner-controller-charts
+      chart: gha-runner-scale-set
+      targetRevision: 0.15.1
+      helm:
+        valueFiles:
+          - $values/step05/helm/arc-runner-buildkit-values.yml
+    - repoURL: https://github.com/3-yuma-3/practice-self-hosted-runner.git
+      targetRevision: main
+      ref: values
+  destination:
+    # Argo CDが動作しているMinikubeクラスターのKubernetes API
+    # kubernetes.default.svc は、同じクラスター内のAPI Service名
+    server: https://kubernetes.default.svc
+    namespace: arc-runners
+  syncPolicy:
+    automated:
+      selfHeal: true

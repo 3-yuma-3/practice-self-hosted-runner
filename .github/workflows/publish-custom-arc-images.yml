@@ -4,6 +4,9 @@ name: publish-custom-arc-images
   push:
     branches:
       - main # main への push 時のみ
+    paths:
+      - 'step05/arc-custom-images/**'
+      - '.github/workflows/publish-custom-arc-images.yml'
 
 permissions:
   contents: read
@@ -63,7 +66,7 @@ jobs:
       - uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
         with:
           files: |
-            step04/arc-custom-images/docker-bake.hcl
+            step05/arc-custom-images/docker-bake.hcl
             cwd://${{ steps.meta-debian.outputs.bake-file }}
             cwd://${{ steps.meta-setup-node.outputs.bake-file }}
             cwd://${{ steps.meta-setup-python.outputs.bake-file }}
