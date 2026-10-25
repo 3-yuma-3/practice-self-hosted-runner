@@ -1,0 +1,63 @@
+# arc-runners の namespace に ServiceAccount を追加する
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  # ServiceAccount を使用するプロセスの識別名
+  # ARC runner Pod の values.yml の serviceAccountName にこの名前を指定する
+  name: buildx-client
+  namespace: arc-runners
+
+---
+
+# arc-runners とは別の、 buildkit 用の namespace を追加する
+# arc-runners から buildkit の namespace にアクセスするために↑で arc-runners に ServiceAccount を作っている
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: buildkit
+
+---
+
+# arc-runners の buildx-client が buildkit という namespace にアクセスする際の role を定義する
+# role 定義では role の bind までは行わず、 role の中身だけ定義する
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: buildx-driver
+  namespace: buildkit
+rules:
+  # arc-runners の buildx-client が deployments を get, create, delete する
+  # deployments は apps api group に属する resource
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "create", "delete"]
+  # arc-runners の buildx-client が pods を list する
+  # pods は core api group に属する resource
+  # core api group は空文字列で表す
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list"]
+  # arc-runners の buildx-client が pods 内で command 実行する
+  # pods/exec は core api group に属する resource
+  # core api group は空文字列で表す
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    # k8s api では exec request を create 操作として認可する
+    verbs: ["create"]
+
+---
+
+# ↑で作った buildx-driver という role を arc-runners の buildx-client に bind する
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: buildx-driver
+  namespace: buildkit
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: buildx-driver
+subjects:
+  - kind: ServiceAccount
+    name: buildx-client
+    namespace: arc-runners
