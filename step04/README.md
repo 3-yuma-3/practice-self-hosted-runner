@@ -13,6 +13,8 @@
 - [Kubernetes driver](https://docs.docker.com/build/builders/drivers/kubernetes/)
 - [Podにサービスアカウントを設定する](https://kubernetes.io/ja/docs/tasks/configure-pod-container/configure-service-account/)
 - [RBAC認可を使用する](https://kubernetes.io/ja/docs/reference/access-authn-authz/rbac/)
+- [actions/actions-runner-controller/runner/actions-runner.ubuntu-24.04.dockerfile](https://github.com/actions/actions-runner-controller/blob/23159a8e2d70ca4cece740fe43a8d9eb0c2818de/runner/actions-runner.ubuntu-24.04.dockerfile)
+- [Bake](https://docs.docker.com/build/bake/)
 
 ## 前提
 
@@ -102,3 +104,6 @@
   > arc-runner-set-runner-ttsdq   Running   buildx-client
 
 - local-pc に立てた minikube の arc runner で docker image の build が成功するか確認するための actions を追加し、 pr で成功を確認する
+- bake で build する用の custom runner image の Dockerfile を実装する
+- 複数の Dockerfile を一括で build するための `docker-bake.hcl` を実装する
+- bake で build するための actions を実装する
