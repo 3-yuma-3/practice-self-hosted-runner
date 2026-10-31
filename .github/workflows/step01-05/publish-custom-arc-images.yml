@@ -1,12 +1,13 @@
 ---
 name: publish-custom-arc-images
 "on":
-  push:
-    branches:
-      - main # main への push 時のみ
-    paths:
-      - 'step05/arc-custom-images/**'
-      - '.github/workflows/publish-custom-arc-images.yml'
+  # push:
+  #   branches:
+  #     - main # main への push 時のみ
+  #   paths:
+  #     - 'step05/arc-custom-images/**'
+  #     - '.github/workflows/publish-custom-arc-images.yml'
+  workflow_dispatch: # 手動実行
 
 permissions:
   contents: read
