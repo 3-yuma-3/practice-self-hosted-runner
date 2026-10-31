@@ -12,3 +12,6 @@ template:
         command: ["/home/runner/run.sh"]
     imagePullSecrets:
       - name: ghcr-pull-secret
+controllerServiceAccount:
+  namespace: arc-systems
+  name: arc-gha-rs-controller

@@ -8,3 +8,6 @@ template:
     imagePullSecrets:
       - name: ghcr-pull-secret
     serviceAccountName: buildx-client
+controllerServiceAccount:
+  namespace: arc-systems
+  name: arc-gha-rs-controller
