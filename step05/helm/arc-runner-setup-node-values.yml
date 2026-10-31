@@ -1,7 +1,7 @@
 githubConfigUrl: "https://github.com/3-yuma-3/practice-self-hosted-runner"
 githubConfigSecret: "pre-defined-secret"
 runnerScaleSetName: "arc-runner-setup-node"
-minRunners: 1
+minRunners: 0
 maxRunners: 2
 template:
   spec:
