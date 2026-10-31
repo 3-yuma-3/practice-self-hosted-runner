@@ -7,8 +7,11 @@ template:
   spec:
     containers:
       - name: runner
-        image: "ghcr.io/3-yuma-3/arc-runner-setup-node:sha-a34a68b"
+        image: "ghcr.io/3-yuma-3/arc-runner-setup-node:sha-fe95a04"
         imagePullPolicy: IfNotPresent
         command: ["/home/runner/run.sh"]
     imagePullSecrets:
       - name: ghcr-pull-secret
+controllerServiceAccount:
+  namespace: arc-systems
+  name: arc-gha-rs-controller

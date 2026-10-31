@@ -4,3 +4,4 @@ self-hosted-runner:
     - arc-runner-debian
     - arc-runner-setup-node
     - arc-runner-setup-python
+    - arc-runner-buildkit

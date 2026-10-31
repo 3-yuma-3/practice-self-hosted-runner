@@ -89,6 +89,21 @@
   argocd-server-7cffbb85cf-qqxrw                      1/1     Running   0          3m
   ```
 
+- Argo CD が private GitHub repository から values file を取得できるように、Fine-grained personal access token (PAT) を発行して Repository Secret を登録する
+  - GitHub の avatar から `Settings` → `Developer settings` → `Personal access tokens` → `Fine-grained tokens` → `Generate new token` を選択する
+  - Token name を入力し、Resource owner に `3-yuma-3` を選択する
+  - Repository access は `Only select repositories` にして、`practice-self-hosted-runner` を選択する
+  - Repository permissions の `Contents` を `Read-only` に設定して token を発行する
+  - `step05/k8s/argocd-repository-secret.yml` の `stringData.password` には `${GH_READ_TOKEN}` を指定しておく
+  - `.env` など別ファイルに token を記述しておき、shell に読み込んでから argocd-repository-secret.yml を apply する
+
+    ```sh
+    . ./.env
+    envsubst < step05/k8s/argocd-repository-secret.yml | kubectl apply -f -
+    ```
+
+    > secret/practice-self-hosted-runner-repo created
+
 - `kubectl port-forward svc/argocd-server -n argocd 8080:443` で argocd-server service の 443 port を、 local の 8080 port に forwarding する。
   - `https://localhost:8080` にアクセスすると argocd の ui が見れる
   - `admin` の password は `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d` で取得する

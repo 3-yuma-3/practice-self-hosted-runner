@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   buildkit-sample:
-    runs-on: arc-runner-set
+    runs-on: arc-runner-buildkit
     steps:
       - name: Check Docker CLI installed
         run: docker --version
