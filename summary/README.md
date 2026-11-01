@@ -42,10 +42,16 @@
     │       ├── minikube/                     # Minikube 用 Applications
     │       │   ├── arc-controller/           # ARC controller Helm chart の Application
     │       │   ├── cluster-resources/        # Minikube 用 Kubernetes resources の Application
+    │       │   ├── kube-prometheus-stack/    # kube-prometheus-stack の Application
     │       │   ├── runner-scale-set/         # runner scale set ごとの Applications
-    │       │   └── another-app/              # 将来用 placeholder
+    │       │   ├── another-app/              # 将来用 placeholder
+    │       │   └── kustomization.yaml        # Minikube 用 Applications の一覧
     │       └── prd/                          # production 用 placeholder
-    ├── helm/                                 # runner scale set の Helm values
+    ├── helm/                                 # chart ごとの Helm values
+    │   ├── kube-prometheus-stack/
+    │   │   └── environments/
+    │   │       ├── minikube.yaml             # kube-prometheus-stack 用 values
+    │   │       └── prd.yaml                  # production 用 values placeholder
     │   ├── runner-scale-set/
     │   │   ├── environments/                 # 環境共通の values と Secret サンプル
     │   │   │   ├── minikube.yaml             # Minikube 用の共通 values
