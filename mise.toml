@@ -10,5 +10,6 @@ minikube = "1.39.0"
 helm = "4.3.1"
 kubectl = "1.37.1"
 kustomize = "5.8.3"
+k9s = "0.51.0"
 
 pinact = "5.0.1"
