@@ -31,8 +31,6 @@ target "debian" {
     RUNNER_SHA256_AMD64  = "${RUNNER_SHA256_AMD64}"
     RUNNER_SHA256_ARM64  = "${RUNNER_SHA256_ARM64}"
   }
-  
-  call = "check"
 }
 
 target "setup-node" {
@@ -40,8 +38,6 @@ target "setup-node" {
   context = "summary/arc-custom-images"
   dockerfile = "setup-node.Dockerfile"
   platforms = [ "linux/amd64", "linux/arm64" ]
-  
-  call = "check"
 }
 
 target "setup-python" {
@@ -49,6 +45,4 @@ target "setup-python" {
   context = "summary/arc-custom-images"
   dockerfile = "setup-python.Dockerfile"
   platforms = [ "linux/amd64", "linux/arm64" ]
-  
-  call = "check"
 }
