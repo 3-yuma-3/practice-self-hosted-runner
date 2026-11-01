@@ -1,7 +1,7 @@
 name: Debian ARC runner sample
 
 "on":
-  # pull_request:
+  pull_request:
   workflow_dispatch: # 手動実行
 
 permissions:

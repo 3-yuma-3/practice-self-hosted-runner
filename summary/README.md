@@ -10,6 +10,7 @@
   - [手順](#手順)
     - [secret の設定](#secret-の設定)
     - [App of Apps で cluster-resources, arc-controller を deploy する](#app-of-apps-で-cluster-resources-arc-controller-を-deploy-する)
+    - [grafana で resource usage を確認する](#grafana-で-resource-usage-を確認する)
     - [App of Apps で runner-scale-set を deploy する](#app-of-apps-で-runner-scale-set-を-deploy-する)
 
 ## 参考
@@ -19,6 +20,7 @@
 - [step01](../step01/) ~ [step05](../step05/) までのリソースが全て削除されていること
   - `minikube delete --all`
   - github上のtoken
+- 本実装は production ready ではない。 production で運用する際には minikube 用の簡易実装に対して適宜必要な修正を行う必要がある。
 
 ## ディレクトリ構成
 
@@ -41,10 +43,16 @@
     │       ├── minikube/                     # Minikube 用 Applications
     │       │   ├── arc-controller/           # ARC controller Helm chart の Application
     │       │   ├── cluster-resources/        # Minikube 用 Kubernetes resources の Application
+    │       │   ├── kube-prometheus-stack/    # kube-prometheus-stack の Application
     │       │   ├── runner-scale-set/         # runner scale set ごとの Applications
-    │       │   └── another-app/              # 将来用 placeholder
+    │       │   ├── another-app/              # 将来用 placeholder
+    │       │   └── kustomization.yaml        # Minikube 用 Applications の一覧
     │       └── prd/                          # production 用 placeholder
-    ├── helm/                                 # runner scale set の Helm values
+    ├── helm/                                 # chart ごとの Helm values
+    │   ├── kube-prometheus-stack/
+    │   │   └── environments/
+    │   │       ├── minikube.yaml             # kube-prometheus-stack 用 values
+    │   │       └── prd.yaml                  # production 用 values placeholder
     │   ├── runner-scale-set/
     │   │   ├── environments/                 # 環境共通の values と Secret サンプル
     │   │   │   ├── minikube.yaml             # Minikube 用の共通 values
@@ -90,6 +98,11 @@
 ```sh
 minikube start
 
+minikube addons enable metrics-server
+
+# metrics-server を enable にした後に少し待つ
+kubectl top pod -A
+
 # argocd を install する前に各種 namespace の作成を行なっておく
 kubectl apply -f summary/k8s/base/namespaces.yaml
 
@@ -120,7 +133,25 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 # root-application を apply して k8s resource を deploy する
 kubectl apply -f summary/argocd/app-of-apps/minikube/root-application.yaml
 
-# argocd ui で arc-controller, cluster-resources が healthy になることを確認する
+# argocd ui で arc-controller, cluster-resources, kube-prometheus-stack が healthy になることを確認する
+```
+
+### grafana で resource usage を確認する
+
+```sh
+# grafana の初期 admin-user を取得
+kubectl -n monitoring get secret kube-prometheus-stack-grafana \
+  -o jsonpath='{.data.admin-user}' | base64 -d; echo
+
+# grafana の初期 admin-password を取得
+kubectl -n monitoring get secret kube-prometheus-stack-grafana \
+  -o jsonpath='{.data.admin-password}' | base64 -d; echo
+
+# grafana の 80 port を、 local の 3000 port に forwarding して http://localhost:3000 にアクセスする
+kubectl -n monitoring port-forward svc/kube-prometheus-stack-grafana 3000:80
+
+# prometheus の 9090 port を、 local の 9090 port に forwarding して http://localhost:9090 にアクセスする
+kubectl -n monitoring port-forward svc/kube-prometheus-stack-prometheus 9090:9090
 ```
 
 ### App of Apps で runner-scale-set を deploy する

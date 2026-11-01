@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - arc-controller
   - cluster-resources
+  - kube-prometheus-stack
   - runner-scale-set # arc-controller, cluster-resources の deploy 後に deployする

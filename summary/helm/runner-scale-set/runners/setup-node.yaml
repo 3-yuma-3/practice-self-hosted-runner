@@ -3,6 +3,6 @@ template:
   spec:
     containers:
       - name: runner
-        image: "ghcr.io/3-yuma-3/arc-runner-setup-node:sha-1926fa3"
+        image: "ghcr.io/3-yuma-3/arc-runner-setup-node:sha-402b113"
         imagePullPolicy: IfNotPresent
         command: ["/home/runner/run.sh"]
