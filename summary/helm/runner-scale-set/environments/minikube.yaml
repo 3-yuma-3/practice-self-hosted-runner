@@ -1,0 +1,11 @@
+githubConfigUrl: "https://github.com/3-yuma-3/practice-self-hosted-runner"
+githubConfigSecret: "pre-defined-secret"
+minRunners: 0
+maxRunners: 2
+controllerServiceAccount:
+  namespace: arc-systems
+  name: arc-gha-rs-controller
+template:
+  spec:
+    imagePullSecrets:
+      - name: ghcr-pull-secret

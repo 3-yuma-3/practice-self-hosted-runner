@@ -1,0 +1,8 @@
+runnerScaleSetName: "arc-runner-debian"
+template:
+  spec:
+    containers:
+      - name: runner
+        image: "ghcr.io/3-yuma-3/arc-runner-debian:sha-1926fa3"
+        imagePullPolicy: IfNotPresent
+        command: ["/home/runner/run.sh"]

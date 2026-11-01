@@ -23,3 +23,5 @@
   - local-pc の minikube の runner で buildx bake を実行し、 この repo 専用で複数種類 (ubuntu, debian, RHEL系, buildx/buildkit など) の custom runner image を build して ghcr へ publish し、 用途別の ARC scale set を用意し、 actions から使い分ける
 - [step05](./step05/)
   - argocd を使用し、 この repo 専用の複数種類の custom runner image を、継続的に minikube に自動反映する構成を構築する
+- [summary](./summary/)
+  - step01~05 のまとめとして minikube で self-hosted runner をゼロから再構築する
