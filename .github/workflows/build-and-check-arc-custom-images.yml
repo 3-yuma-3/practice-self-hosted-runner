@@ -6,6 +6,7 @@ name: build-custom-arc-images
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   build-custom-arc-images:
@@ -19,13 +20,46 @@ jobs:
           driver-opts: namespace=buildkit,qemu.install=true
           buildkitd-config: summary/arc-custom-images/buildkitd.toml
 
+      - uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
         with:
           files: summary/arc-custom-images/docker-bake.hcl
           call: check
           push: false
 
-      - uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
+      # runner nodeの負荷が高過ぎる対策
+      # target別に直列で実行。arm64だけbuild。cache使用。
+      - name: Build debian image
+        uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
         with:
           files: summary/arc-custom-images/docker-bake.hcl
+          targets: debian
           push: false
+          set: |
+            debian.platform=linux/arm64
+            debian.cache-from=type=registry,ref=ghcr.io/${{ github.repository_owner }}/arc-runner-debian:buildcache
+
+      - name: Build setup-node image
+        uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
+        with:
+          files: summary/arc-custom-images/docker-bake.hcl
+          targets: setup-node
+          push: false
+          set: |
+            setup-node.platform=linux/arm64
+            setup-node.cache-from=type=registry,ref=ghcr.io/${{ github.repository_owner }}/arc-runner-setup-node:buildcache
+
+      - name: Build setup-python image
+        uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
+        with:
+          files: summary/arc-custom-images/docker-bake.hcl
+          targets: setup-python
+          push: false
+          set: |
+            setup-node.platform=linux/arm64
+            setup-python.cache-from=type=registry,ref=ghcr.io/${{ github.repository_owner }}/arc-runner-setup-python:buildcache

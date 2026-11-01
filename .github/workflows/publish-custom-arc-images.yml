@@ -67,12 +67,36 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # runner nodeの負荷が高過ぎるのでtarget別に直列で実行
       - uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
         with:
           files: |
             summary/arc-custom-images/docker-bake.hcl
             cwd://${{ steps.meta-debian.outputs.bake-file }}
-            cwd://${{ steps.meta-setup-node.outputs.bake-file }}
-            cwd://${{ steps.meta-setup-python.outputs.bake-file }}
-          targets: default
+          targets: debian
           push: true
+          set: |
+            debian.cache-from=type=registry,ref=ghcr.io/${{ github.repository_owner }}/arc-runner-debian:buildcache
+            debian.cache-to=type=registry,ref=ghcr.io/${{ github.repository_owner }}/arc-runner-debian:buildcache,mode=max
+
+      - uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
+        with:
+          files: |
+            summary/arc-custom-images/docker-bake.hcl
+            cwd://${{ steps.meta-setup-node.outputs.bake-file }}
+          targets: setup-node
+          push: true
+          set: |
+            setup-node.cache-from=type=registry,ref=ghcr.io/${{ github.repository_owner }}/arc-runner-setup-node:buildcache
+            setup-node.cache-to=type=registry,ref=ghcr.io/${{ github.repository_owner }}/arc-runner-setup-node:buildcache,mode=max
+
+      - uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
+        with:
+          files: |
+            summary/arc-custom-images/docker-bake.hcl
+            cwd://${{ steps.meta-setup-python.outputs.bake-file }}
+          targets: setup-python
+          push: true
+          set: |
+            setup-python.cache-from=type=registry,ref=ghcr.io/${{ github.repository_owner }}/arc-runner-setup-python:buildcache
+            setup-python.cache-to=type=registry,ref=ghcr.io/${{ github.repository_owner }}/arc-runner-setup-python:buildcache,mode=max
