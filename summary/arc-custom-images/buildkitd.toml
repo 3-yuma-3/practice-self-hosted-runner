@@ -1,0 +1,5 @@
+[registry."ghcr.io"]
+  mirrors = ["registry-cache.buildkit.svc.cluster.local:5000"]
+
+[registry."registry-cache.buildkit.svc.cluster.local:5000"]
+  http = true

@@ -1,0 +1,78 @@
+---
+name: publish-custom-arc-images
+"on":
+  push:
+    branches:
+      - main # main への push 時のみ
+    paths:
+      - 'summary/arc-custom-images/**'
+      - '.github/workflows/publish-custom-arc-images.yml'
+  workflow_dispatch: # 手動実行
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish-custom-arc-images:
+    runs-on: arc-runner-buildkit
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+        with:
+          driver: kubernetes
+          driver-opts: namespace=buildkit,qemu.install=true
+          buildkitd-config: summary/arc-custom-images/buildkitd.toml
+
+      - name: Extract metadata for Debian
+        id: meta-debian
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/arc-runner-debian
+          bake-target: metadata-debian
+          # 1. mainなどのブランチ名
+          # 2. sha-<コミットSHA>
+          # 3. デフォルトブランチでのみ latest
+          tags: |
+            type=ref,event=branch
+            type=sha
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Extract metadata for setup-node
+        id: meta-setup-node
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/arc-runner-setup-node
+          bake-target: metadata-setup-node
+          tags: |
+            type=ref,event=branch
+            type=sha
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Extract metadata for setup-python
+        id: meta-setup-python
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/arc-runner-setup-python
+          bake-target: metadata-setup-python
+          tags: |
+            type=ref,event=branch
+            type=sha
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
+        with:
+          files: |
+            summary/arc-custom-images/docker-bake.hcl
+            cwd://${{ steps.meta-debian.outputs.bake-file }}
+            cwd://${{ steps.meta-setup-node.outputs.bake-file }}
+            cwd://${{ steps.meta-setup-python.outputs.bake-file }}
+          targets: default
+          push: true

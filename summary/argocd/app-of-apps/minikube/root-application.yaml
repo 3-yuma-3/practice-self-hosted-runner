@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: summary-minikube-root-application
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/3-yuma-3/practice-self-hosted-runner.git
+    targetRevision: main
+    path: summary/argocd/applications/minikube
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      selfHeal: true
