@@ -19,6 +19,7 @@
 - [step01](../step01/) ~ [step05](../step05/) までのリソースが全て削除されていること
   - `minikube delete --all`
   - github上のtoken
+- 本実装は production ready ではない。 production で運用する際には minikube 用の簡易実装に対して適宜必要な修正を行う必要がある。
 
 ## ディレクトリ構成
 
