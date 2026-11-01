@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - arc-controller
   - cluster-resources
-  # - runner-scale-set # arc-controller, cluster-resources の deploy 後に deployする
+  - runner-scale-set # arc-controller, cluster-resources の deploy 後に deployする
