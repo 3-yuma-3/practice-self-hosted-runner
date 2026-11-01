@@ -90,6 +90,10 @@
 ```sh
 minikube start
 
+minikube addons enable metrics-server
+
+kubectl top pod -A
+
 # argocd を install する前に各種 namespace の作成を行なっておく
 kubectl apply -f summary/k8s/base/namespaces.yaml
 
