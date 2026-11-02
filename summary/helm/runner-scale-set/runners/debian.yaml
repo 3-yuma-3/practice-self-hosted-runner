@@ -1,4 +1,6 @@
 runnerScaleSetName: "arc-runner-debian"
+scaleSetLabels:
+  - debian
 template:
   spec:
     containers:

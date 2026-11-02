@@ -21,6 +21,10 @@
   - `minikube delete --all`
   - github上のtoken
 - 本実装は production ready ではない。 production で運用する際には minikube 用の簡易実装に対して適宜必要な修正を行う必要がある。
+- 複数の node で使用する場合
+  - 別 node 用の App of Apps としての Root Application を追加し、その Application を監視させる
+  - helm の values.yml の `runnerScaleSetName` を別名にする
+  - actions側では `runs-on: [buildkit]` など `scaleSetLabels` の定義を指定する
 
 ## ディレクトリ構成
 
@@ -96,11 +100,14 @@
 ### App of Apps で cluster-resources, arc-controller を deploy する
 
 ```sh
-minikube start
+# minikube default の 2 cpu, 4 GB だと足りないので引数で指定する
+minikube start --driver=docker --cpus=6 --memory=8192mb
 
 minikube addons enable metrics-server
 
-# metrics-server を enable にした後に少し待つ
+k9s --readonly
+
+# metrics-server が runnning になった後に打つ
 kubectl top pod -A
 
 # argocd を install する前に各種 namespace の作成を行なっておく

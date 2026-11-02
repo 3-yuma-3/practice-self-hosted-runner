@@ -1,4 +1,6 @@
 runnerScaleSetName: "arc-runner-setup-node"
+scaleSetLabels:
+  - setup-node
 template:
   spec:
     containers:
