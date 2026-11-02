@@ -100,11 +100,14 @@
 ### App of Apps で cluster-resources, arc-controller を deploy する
 
 ```sh
-minikube start
+# minikube default の 2 cpu, 4 GB だと足りないので引数で指定する
+minikube start --driver=docker --cpus=6 --memory=8192mb
 
 minikube addons enable metrics-server
 
-# metrics-server を enable にした後に少し待つ
+k9s --readonly
+
+# metrics-server が runnning になった後に打つ
 kubectl top pod -A
 
 # argocd を install する前に各種 namespace の作成を行なっておく
