@@ -1,4 +1,6 @@
 runnerScaleSetName: "arc-runner-setup-python"
+scaleSetLabels:
+  - setup-python
 template:
   spec:
     containers:

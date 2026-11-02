@@ -1,4 +1,6 @@
 runnerScaleSetName: "arc-runner-buildkit"
+scaleSetLabels:
+  - buildkit
 template:
   spec:
     serviceAccountName: buildx-client

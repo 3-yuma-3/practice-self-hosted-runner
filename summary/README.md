@@ -21,6 +21,10 @@
   - `minikube delete --all`
   - github上のtoken
 - 本実装は production ready ではない。 production で運用する際には minikube 用の簡易実装に対して適宜必要な修正を行う必要がある。
+- 複数の node で使用する場合
+  - 別 node 用の App of Apps としての Root Application を追加し、その Application を監視させる
+  - helm の values.yml の `runnerScaleSetName` を別名にする
+  - actions側では `runs-on: [buildkit]` など `scaleSetLabels` の定義を指定する
 
 ## ディレクトリ構成
 
