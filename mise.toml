@@ -14,5 +14,6 @@ k9s = "0.51.0"
 opa = "1.22.0"
 conftest = "0.71.1"
 regal = "0.43.0"
+"aqua:kubescape/kubescape" = "4.0.17"
 
 pinact = "5.0.1"
