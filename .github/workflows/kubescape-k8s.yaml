@@ -1,0 +1,34 @@
+---
+name: kubescape-k8s
+"on":
+  pull_request: # PRのpreview merge commitで実行
+  workflow_dispatch: # 手動実行
+
+permissions:
+  contents: read
+
+jobs:
+  kubescape-k8s:
+    runs-on: arc-runner-buildkit # arc-runner-basicをdeployしたら切り替える
+    # runs-on: arc-runner-basic
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # kubescape提供のactionはdocker daemonが必要なので使えない
+      - name: Install kubescape kustomize by mise
+        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          install_args: "aqua:kubescape/kubescape kustomize"
+
+      - name: Render k8s manifests
+        run: |
+          kustomize build summary/k8s/minikube \
+            > "$RUNNER_TEMP/k8s-rendered.yaml"
+
+      - name: Scan manifests with kubescape
+        run: |
+          kubescape scan "$RUNNER_TEMP/k8s-rendered.yaml" \
+            --keep-local
