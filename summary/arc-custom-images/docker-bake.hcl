@@ -52,7 +52,9 @@ target "ubuntu" {
   inherits = ["metadata-ubuntu"]
   context = "summary/arc-custom-images"
   dockerfile = "ubuntu.Dockerfile"
-  platforms = ["linux/amd64", "linux/arm64"]
+  # amd64 は dockerfile 内での tar の展開に失敗するので arm64 だけにする
+  // platforms = ["linux/amd64", "linux/arm64"]
+  platforms = ["linux/arm64"]
   
   args = {
     RUNNER_VERSION       = "${RUNNER_VERSION}"

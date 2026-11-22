@@ -38,6 +38,7 @@ jobs:
           github-token: ${{ github.token }}
           run-id: ${{ github.event.workflow_run.id }}
 
+      # docker-archive:arc-images/ubuntu-amd64.tar は除外。 see docker-bake.hcl
       - name: Scan custom images with kubescape
         run: |
           kubescape scan image \
@@ -47,6 +48,5 @@ jobs:
             docker-archive:arc-images/setup-node-arm64.tar \
             docker-archive:arc-images/setup-python-amd64.tar \
             docker-archive:arc-images/setup-python-arm64.tar \
-            docker-archive:arc-images/ubuntu-amd64.tar \
             docker-archive:arc-images/ubuntu-arm64.tar \
             --keep-local

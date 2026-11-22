@@ -63,7 +63,9 @@ target "ubuntu-export" {
   inherits = ["ubuntu"]
 
   matrix = {
-    arch = ["amd64", "arm64"]
+    // see docker-bake.hcl
+    // arch = ["amd64", "arm64"]
+    arch = ["arm64"]
   }
   name = "ubuntu-export-${arch}"
 
