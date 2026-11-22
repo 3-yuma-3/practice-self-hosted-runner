@@ -25,6 +25,9 @@
   - 別 node 用の App of Apps としての Root Application を追加し、その Application を監視させる
   - helm の values.yml の `runnerScaleSetName` を別名にする
   - actions側では `runs-on: [buildkit]` など `scaleSetLabels` の定義を指定する
+- Falco は Docker Desktop + minikube --driver=docker で動作しないので導入見送り
+  - [Try Falco on Kubernetes](https://falco.org/docs/getting-started/falco-kubernetes-quickstart/)
+    - > Note that using Docker Desktop on Windows or macOS will not work for this purpose.
 
 ## ディレクトリ構成
 
@@ -101,7 +104,10 @@
 
 ```sh
 # minikube default の 2 cpu, 4 GB だと足りないので引数で指定する
-minikube start --driver=docker --cpus=6 --memory=8192mb
+# docker に与えている resource を考慮しながら調整する
+# cpu= 3 or 4 ...
+# memory= 6144mb or 8192 mb ...
+minikube start --driver=docker --cpus=5 --memory=9216mb
 
 minikube addons enable metrics-server
 

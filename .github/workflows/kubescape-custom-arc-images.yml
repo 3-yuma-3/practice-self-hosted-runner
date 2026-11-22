@@ -1,0 +1,46 @@
+---
+name: kubescape-custom-arc-images
+"on":
+  workflow_run:
+    workflows: ["build-custom-arc-images"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  kubescape-custom-arc-images:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: arc-runner-buildkit # arc-runner-basicをdeployしたら切り替える
+    # runs-on: arc-runner-basic
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # kubescape提供のactionはdocker daemonが必要なので使えない
+      - name: Install kubescape by mise
+        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          install_args: "aqua:kubescape/kubescape"
+
+      - name: Download image
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: arc-custom-images
+          path: arc-images
+          github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Scan custom images with kubescape
+        run: |
+          kubescape scan image \
+            docker-archive:arc-images/debian-amd64.tar \
+            docker-archive:arc-images/debian-arm64.tar \
+            docker-archive:arc-images/setup-node-amd64.tar \
+            docker-archive:arc-images/setup-node-arm64.tar \
+            docker-archive:arc-images/setup-python-amd64.tar \
+            docker-archive:arc-images/setup-python-arm64.tar \
+            --keep-local

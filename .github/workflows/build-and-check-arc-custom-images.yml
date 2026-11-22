@@ -19,13 +19,29 @@ jobs:
           driver-opts: namespace=buildkit,qemu.install=true
           buildkitd-config: summary/arc-custom-images/buildkitd.toml
 
-      - uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
+      - name: Docker build check
+        uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
         with:
           files: summary/arc-custom-images/docker-bake.hcl
           call: check
           push: false
 
-      - uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
+      - name: Create image export directory
+        run: mkdir -p arc-images
+
+      - name: Docker buildx bake
+        uses: docker/bake-action@59cb1203cd42bcefd40a1b6d73b589e48c86040e # v7.5.0
         with:
-          files: summary/arc-custom-images/docker-bake.hcl
+          source: .
+          files: |
+            summary/arc-custom-images/docker-bake.hcl
+            summary/arc-custom-images/docker-bake-export.hcl
+          targets: export-images
           push: false
+
+      - name: Upload image
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: arc-custom-images
+          path: arc-images/*.tar
+          if-no-files-found: error
