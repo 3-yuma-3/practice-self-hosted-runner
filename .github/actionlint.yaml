@@ -6,3 +6,4 @@ self-hosted-runner:
     - arc-runner-setup-python
     - arc-runner-buildkit
     - arc-runner-basic
+    - arc-runner-ubuntu

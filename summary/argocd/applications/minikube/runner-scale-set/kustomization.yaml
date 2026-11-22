@@ -7,3 +7,4 @@ resources:
   - debian.yaml
   - setup-node.yaml
   - setup-python.yaml
+  - ubuntu.yaml

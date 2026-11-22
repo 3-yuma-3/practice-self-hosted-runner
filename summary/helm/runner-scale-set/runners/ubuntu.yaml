@@ -1,0 +1,10 @@
+runnerScaleSetName: "arc-runner-ubuntu"
+scaleSetLabels:
+  - ubuntu
+template:
+  spec:
+    containers:
+      - name: runner
+        image: "ghcr.io/3-yuma-3/arc-runner-ubuntu:sha-a067346"
+        imagePullPolicy: IfNotPresent
+        command: ["/home/runner/run.sh"]

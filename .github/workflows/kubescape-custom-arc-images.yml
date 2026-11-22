@@ -42,4 +42,6 @@ jobs:
             docker-archive:arc-images/setup-node-arm64.tar \
             docker-archive:arc-images/setup-python-amd64.tar \
             docker-archive:arc-images/setup-python-arm64.tar \
+            docker-archive:arc-images/ubuntu-amd64.tar \
+            docker-archive:arc-images/ubuntu-arm64.tar \
             --keep-local
