@@ -54,33 +54,68 @@ jobs:
           kubescape scan "$RUNNER_TEMP/arc-controller.yaml" \
             --keep-local
 
-  # kubescape-helm-gha-runner-scale-set:
-  #   runs-on: arc-runner-buildkit # arc-runner-basicをdeployしたらubuntu-latestから切り替える
-  #   # runs-on: arc-runner-basic
+  kubescape-helm-gha-runner-scale-set:
+    name: gha-runner-scale-set (${{ matrix.scale_set }})
+    runs-on: arc-runner-buildkit # arc-runner-basicをdeployしたらubuntu-latestから切り替える
+    # runs-on: arc-runner-basic
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        scale_set:
+          - basic
+          - buildkit
+          - debian
+          - setup-node
+          - setup-python
 
-  #   steps:
-  #     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-  #       with:
-  #         persist-credentials: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-  #     # kubescape提供のactionはdocker daemonが必要なので使えない
-  #     - name: Install helm by mise
-  #       uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
-  #       with:
-  #         install_args: "aqua:kubescape/kubescape helm yq"
+      # kubescape提供のactionはdocker daemonが必要なので使えない
+      - name: Install helm by mise
+        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          install_args: "aqua:kubescape/kubescape helm yq"
 
-  #     - name: Extract gha-runner-scale-set chart specs from argocd manifest
-  #       id: arc-set_manifest
-  #       env:
-  #         APP: summary/argocd/applications/minikube/arc-controller/application.yaml
-  #       run: |
+      - name: Extract gha-runner-scale-set chart specs from argocd manifest
+        id: arc-set_manifest
+        env:
+          APP: summary/argocd/applications/minikube/runner-scale-set/${{ matrix.scale_set }}.yaml
+        run: |
+          yq -r '"chart_version=" + (
+              .spec.sources[]
+              | select(.chart == "gha-runner-scale-set")
+              | .targetRevision
+            )' "$APP" >> "$GITHUB_OUTPUT"
+          yq -r '"namespace=" + (.spec.destination.namespace)' "$APP" >> "$GITHUB_OUTPUT"
+          yq -r '"release_name=" + (.metadata.name)' "$APP" >> "$GITHUB_OUTPUT"
 
-  #     - name: Render gha-runner-scale-set helm template
-  #       env:
-  #         CHART_VERSION: ${{ steps.arc-set_manifest.outputs.chart_version }}
-  #       run: |
+      - name: Render gha-runner-scale-set helm template
+        env:
+          CHART_VERSION: ${{ steps.arc-set_manifest.outputs.chart_version }}
+          NAMESPACE: ${{ steps.arc-set_manifest.outputs.namespace }}
+          RELEASE_NAME: ${{ steps.arc-set_manifest.outputs.release_name }}
+          SCALE_SET: ${{ matrix.scale_set }}
+          RUNNER_VALUES: summary/helm/runner-scale-set/runners/${{ matrix.scale_set }}.yaml
+        run: |
+          helm template "$RELEASE_NAME" \
+            oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set \
+            --version "$CHART_VERSION" \
+            --namespace "$NAMESPACE" \
+            --values summary/helm/runner-scale-set/environments/minikube.yaml \
+            --values "$RUNNER_VALUES" \
+            > "$RUNNER_TEMP/gha-runner-scale-set-${SCALE_SET}.yaml"
 
-            
+      - name: Scan gha-runner-scale-set with Kubescape
+        env:
+          SCALE_SET: ${{ matrix.scale_set }}
+        run: |
+          kubescape scan "$RUNNER_TEMP/gha-runner-scale-set-${SCALE_SET}.yaml" \
+            --keep-local
+
   kubescape-helm-kube-prometheus-stack:
     runs-on: arc-runner-buildkit # arc-runner-basicをdeployしたらubuntu-latestから切り替える
     # runs-on: arc-runner-basic
