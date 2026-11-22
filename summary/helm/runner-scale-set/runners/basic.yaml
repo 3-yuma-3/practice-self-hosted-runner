@@ -1,6 +1,7 @@
 runnerScaleSetName: "arc-runner-basic"
 scaleSetLabels:
   - basic
+maxRunners: 5 # 負荷を見ながら調整する
 template:
   spec:
     automountServiceAccountToken: false

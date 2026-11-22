@@ -1,6 +1,7 @@
 runnerScaleSetName: "arc-runner-ubuntu"
 scaleSetLabels:
   - ubuntu
+maxRunners: 3 # 負荷を見ながら調整する
 template:
   spec:
     containers:
