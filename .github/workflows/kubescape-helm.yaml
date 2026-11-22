@@ -1,0 +1,98 @@
+---
+name: kubescape-helm
+"on":
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  kubescape-helm:
+    runs-on: ubuntu-latest # arc-runner-basicをdeployしたらubuntu-latestから切り替える
+    # runs-on: arc-runner-basic
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # kubescape提供のactionはdocker daemonが必要なので使えない
+      - name: Install helm by mise
+        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        with:
+          install_args: "aqua:kubescape/kubescape helm yq"
+
+      - name: Helm repo add kube-prometheus-stack
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+      - name: Extract kube-prometheus-stack chart specs from argocd manifest
+        id: prometheus_manifest
+        env:
+          APP: summary/argocd/applications/minikube/kube-prometheus-stack/application.yaml
+        run: |
+          yq -r '"chart_version=" + (
+              .spec.sources[]
+              | select(.chart == "kube-prometheus-stack")
+              | .targetRevision
+            )' "$APP" >> "$GITHUB_OUTPUT"
+          yq -r '"namespace=" + (.spec.destination.namespace)' "$APP" >> "$GITHUB_OUTPUT"
+
+      - name: Extract gha-runner-scale-set-controller chart specs from argocd manifest
+        id: arc-controller_manifest
+        env:
+          APP: summary/argocd/applications/minikube/arc-controller/application.yaml
+          # TODO: valuesのtemp書き込みを解消する
+        run: |
+          yq -r '"chart_version=" + (
+              .spec.source.targetRevision
+            )' "$APP" >> "$GITHUB_OUTPUT"
+          yq -r '"namespace=" + (.spec.destination.namespace)' "$APP" >> "$GITHUB_OUTPUT"
+          yq -r '"release_name=" + (.spec.source.helm.releaseName)' "$APP" >> "$GITHUB_OUTPUT"
+          yq -r '.spec.source.helm.values' "$APP" > "$RUNNER_TEMP/arc-controller-values.yaml"
+
+      # - name: Extract gha-runner-scale-set chart specs from argocd manifest
+      #   id: arc-set_manifest
+      #   env:
+      #     APP: summary/argocd/applications/minikube/arc-controller/application.yaml
+      #   run: |
+
+      - name: Render kube-prometheus-stack helm template
+        env:
+          CHART_VERSION: ${{ steps.prometheus_manifest.outputs.chart_version }}
+          NAMESPACE: ${{ steps.prometheus_manifest.outputs.namespace }}
+        run: |
+            helm template kube-prometheus-stack prometheus-community/kube-prometheus-stack \
+              --version "$CHART_VERSION" \
+              --namespace "$NAMESPACE" \
+              --values summary/helm/kube-prometheus-stack/environments/minikube.yaml \
+              > "$RUNNER_TEMP/kube-prometheus-stack.yaml"
+
+      - name: Render gha-runner-scale-set-controller helm template
+        env:
+          CHART_VERSION: ${{ steps.arc-controller_manifest.outputs.chart_version }}
+          NAMESPACE: ${{ steps.arc-controller_manifest.outputs.namespace }}
+          RELEASE_NAME: ${{ steps.arc-controller_manifest.outputs.release_name }}
+        run: |
+          helm template "$RELEASE_NAME" \
+            oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller \
+            --version "$CHART_VERSION" \
+            --namespace "$NAMESPACE" \
+            --values "$RUNNER_TEMP/arc-controller-values.yaml" \
+            > "$RUNNER_TEMP/arc-controller.yaml"
+
+      # - name: Render gha-runner-scale-set helm template
+      #   env:
+      #     CHART_VERSION: ${{ steps.arc-set_manifest.outputs.chart_version }}
+      #   run: |
+
+      - name: Scan kube-prometheus-stack values with kubescape
+        run: |
+          kubescape scan "$RUNNER_TEMP/kube-prometheus-stack.yaml" \
+            --keep-local
+
+      - name: Scan gha-runner-scale-set-controller values with kubescape
+        run: |
+          kubescape scan "$RUNNER_TEMP/arc-controller.yaml" \
+            --keep-local
