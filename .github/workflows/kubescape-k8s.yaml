@@ -4,6 +4,11 @@ name: kubescape-k8s
   pull_request: # PRのpreview merge commitで実行
   workflow_dispatch: # 手動実行
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+
 permissions:
   contents: read
 

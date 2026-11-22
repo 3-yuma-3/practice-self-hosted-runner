@@ -5,6 +5,11 @@ name: kubescape-custom-arc-images
     workflows: ["build-custom-arc-images"]
     types: [completed]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+
 permissions:
   contents: read
   actions: read
