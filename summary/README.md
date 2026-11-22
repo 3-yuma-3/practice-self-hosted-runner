@@ -107,7 +107,7 @@
 # docker に与えている resource を考慮しながら調整する
 # cpu= 3 or 4 ...
 # memory= 6144mb or 8192 mb ...
-minikube start --driver=docker --cpus=4 --memory=6144mb
+minikube start --driver=docker --cpus=5 --memory=9216mb
 
 minikube addons enable metrics-server
 
