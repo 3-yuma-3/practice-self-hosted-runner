@@ -9,8 +9,7 @@ permissions:
 
 jobs:
   kubescape-helm-gha-runner-scale-set-controller:
-    runs-on: arc-runner-buildkit # arc-runner-basicをdeployしたらubuntu-latestから切り替える
-    # runs-on: arc-runner-basic
+    runs-on: arc-runner-basic
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -56,8 +55,7 @@ jobs:
 
   kubescape-helm-gha-runner-scale-set:
     name: gha-runner-scale-set (${{ matrix.scale_set }})
-    runs-on: arc-runner-buildkit # arc-runner-basicをdeployしたらubuntu-latestから切り替える
-    # runs-on: arc-runner-basic
+    runs-on: arc-runner-basic
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -117,8 +115,7 @@ jobs:
             --keep-local
 
   kubescape-helm-kube-prometheus-stack:
-    runs-on: arc-runner-buildkit # arc-runner-basicをdeployしたらubuntu-latestから切り替える
-    # runs-on: arc-runner-basic
+    runs-on: arc-runner-basic
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

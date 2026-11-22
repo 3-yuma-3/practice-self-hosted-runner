@@ -12,8 +12,7 @@ permissions:
 jobs:
   kubescape-custom-arc-images:
     if: github.event.workflow_run.conclusion == 'success'
-    runs-on: arc-runner-buildkit # arc-runner-basicをdeployしたら切り替える
-    # runs-on: arc-runner-basic
+    runs-on: arc-runner-basic
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
