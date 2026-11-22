@@ -8,6 +8,7 @@ name: CodeQL
     branches: [main]
   schedule:
     - cron: '0 9 * * 6'
+      # TODO: actionlint を 上げないと落ちる
       timezone: 'Asia/Tokyo'
 
 permissions:

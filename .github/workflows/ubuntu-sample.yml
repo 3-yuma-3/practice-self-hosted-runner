@@ -13,6 +13,7 @@ permissions:
   contents: read
 
 jobs:
+  # TODO: ubuntu.Dockerfile で build に必要な package を apt-get install しないと動かない
   ubuntu-sample-setup-node:
     runs-on: arc-runner-ubuntu
     steps:
@@ -54,6 +55,7 @@ jobs:
       - name: Verify go version
         run: go version
 
+  # TODO: ubuntu.Dockerfile で build に必要な dir を mkidir しないと動かない
   ubuntu-sample-setup-ruby:
     runs-on: arc-runner-ubuntu
     steps:
