@@ -142,6 +142,8 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 # argocd-server service の 443 port を、 local の 8080 port に forwarding して https://localhost:8080 にアクセスする
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 
+# summary/helm/runner-scale-set/environments/minikube.yaml の maxRunners を調整する
+
 # まだであれば App of Apps としての root-application を main に merge しておく
 # root-application を apply して k8s resource を deploy する
 kubectl apply -f summary/argocd/app-of-apps/minikube/root-application.yaml
