@@ -5,6 +5,11 @@ name: kubescape-custom-arc-images
     workflows: ["build-custom-arc-images"]
     types: [completed]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+
 permissions:
   contents: read
   actions: read
@@ -12,8 +17,7 @@ permissions:
 jobs:
   kubescape-custom-arc-images:
     if: github.event.workflow_run.conclusion == 'success'
-    runs-on: arc-runner-buildkit # arc-runner-basicをdeployしたら切り替える
-    # runs-on: arc-runner-basic
+    runs-on: arc-runner-basic
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -34,6 +38,7 @@ jobs:
           github-token: ${{ github.token }}
           run-id: ${{ github.event.workflow_run.id }}
 
+      # docker-archive:arc-images/ubuntu-amd64.tar は除外。 see docker-bake.hcl
       - name: Scan custom images with kubescape
         run: |
           kubescape scan image \
@@ -43,4 +48,5 @@ jobs:
             docker-archive:arc-images/setup-node-arm64.tar \
             docker-archive:arc-images/setup-python-amd64.tar \
             docker-archive:arc-images/setup-python-arm64.tar \
+            docker-archive:arc-images/ubuntu-arm64.tar \
             --keep-local

@@ -1,0 +1,65 @@
+name: Ubuntu ARC runner sample
+
+"on":
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+
+permissions:
+  contents: read
+
+jobs:
+  ubuntu-sample-setup-node:
+    runs-on: arc-runner-ubuntu
+    steps:
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26
+
+      - name: Verify node version
+        run: node --version
+
+  ubuntu-sample-setup-python:
+    runs-on: arc-runner-ubuntu
+    steps:
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+
+      - name: Verify python version
+        run: python --version
+
+  ubuntu-sample-setup-java:
+    runs-on: arc-runner-ubuntu
+    steps:
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: corretto
+          java-version: "25"
+
+      - name: Verify java version
+        run: java --version
+
+  ubuntu-sample-setup-go:
+    runs-on: arc-runner-ubuntu
+    steps:
+      - uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
+        with:
+          go-version: "1.27"
+
+      - name: Verify go version
+        run: go --version
+
+  ubuntu-sample-setup-ruby:
+    runs-on: arc-runner-ubuntu
+    steps:
+      - uses: ruby/setup-ruby@be3c7df29b3349ec6bcfc6b4792f1cf9f5237d18 # v1.343.0
+        with:
+          ruby-version: "4.0.10"
+
+      - name: Verify ruby version
+        run: ruby --version

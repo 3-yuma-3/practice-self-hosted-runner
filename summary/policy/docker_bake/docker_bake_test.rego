@@ -2,23 +2,80 @@ package docker_bake_test
 
 import data.docker_bake
 
-# METADATA
-# description: Validate Docker Bake targets in the default group.
-# entrypoint: true
-test_default_target_must_support_both_architectures if {
+test_ubuntu_with_only_arm64_is_allowed if {
 	config := parse_config("hcl2", `
-		group "default" {
-			targets = ["futuer-image"]
-		}
+        group "default" {
+            targets = ["ubuntu"]
+        }
 
-		target "futuer-image" {
-			platforms = ["linux/amd64"]
-		}
-	`)
+        target "ubuntu" {
+            platforms = ["linux/arm64"]
+        }
+    `)
+
+	violations := docker_bake.deny with input as config
+	count(violations) == 0
+}
+
+test_ubuntu_requires_arm64 if {
+	config := parse_config("hcl2", `
+        group "default" {
+            targets = ["ubuntu"]
+        }
+
+        target "ubuntu" {
+            platforms = ["linux/amd64"]
+        }
+    `)
 
 	violations := docker_bake.deny with input as config
 	count(violations) == 1
+	"Docker Bake default target \"ubuntu\" must include platform \"linux/arm64\"" in violations
+}
 
-	some msg in violations
-	msg == "Docker Bake default target \"futuer-image\" must include platform \"linux/arm64\""
+test_other_target_requires_amd64 if {
+	config := parse_config("hcl2", `
+        group "default" {
+            targets = ["debian"]
+        }
+
+        target "debian" {
+            platforms = ["linux/arm64"]
+        }
+    `)
+
+	violations := docker_bake.deny with input as config
+	count(violations) == 1
+	"Docker Bake default target \"debian\" must include platform \"linux/amd64\"" in violations
+}
+
+test_other_target_requires_arm64 if {
+	config := parse_config("hcl2", `
+        group "default" {
+            targets = ["debian"]
+        }
+
+        target "debian" {
+            platforms = ["linux/amd64"]
+        }
+    `)
+
+	violations := docker_bake.deny with input as config
+	count(violations) == 1
+	"Docker Bake default target \"debian\" must include platform \"linux/arm64\"" in violations
+}
+
+test_other_target_with_both_platforms_is_allowed if {
+	config := parse_config("hcl2", `
+        group "default" {
+            targets = ["debian"]
+        }
+
+        target "debian" {
+            platforms = ["linux/amd64", "linux/arm64"]
+        }
+    `)
+
+	violations := docker_bake.deny with input as config
+	count(violations) == 0
 }

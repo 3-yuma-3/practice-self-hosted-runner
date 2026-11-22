@@ -1,5 +1,5 @@
 group "export-images" {
-  targets = ["debian-export", "setup-node-export", "setup-python-export"]
+  targets = ["debian-export", "setup-node-export", "setup-python-export", "ubuntu-export"]
 }
 
 target "debian-export" {
@@ -55,6 +55,27 @@ target "setup-python-export" {
     {
       type = "docker"
       dest = "arc-images/setup-python-${arch}.tar"
+    }
+  ]
+}
+
+target "ubuntu-export" {
+  inherits = ["ubuntu"]
+
+  matrix = {
+    // see docker-bake.hcl
+    // arch = ["amd64", "arm64"]
+    arch = ["arm64"]
+  }
+  name = "ubuntu-export-${arch}"
+
+  platforms = ["linux/${arch}"]
+  tags      = ["arc-runner-ubuntu:${arch}"]
+
+  output = [
+    {
+      type = "docker"
+      dest = "arc-images/ubuntu-${arch}.tar"
     }
   ]
 }

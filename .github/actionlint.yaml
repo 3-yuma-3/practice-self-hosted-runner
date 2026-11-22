@@ -5,3 +5,5 @@ self-hosted-runner:
     - arc-runner-setup-node
     - arc-runner-setup-python
     - arc-runner-buildkit
+    - arc-runner-basic
+    - arc-runner-ubuntu
