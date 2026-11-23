@@ -6,6 +6,10 @@
   - [目次](#目次)
   - [目的](#目的)
   - [ディレクトリ構成](#ディレクトリ構成)
+  - [環境構築](#環境構築)
+    - [apm](#apm)
+    - [gh-aw](#gh-aw)
+    - [gh actions-lock](#gh-actions-lock)
 
 ## 目的
 
@@ -25,3 +29,20 @@
   - argocd を使用し、 この repo 専用の複数種類の custom runner image を、継続的に minikube に自動反映する構成を構築する
 - [summary](./summary/)
   - step01~05 のまとめとして minikube で self-hosted runner をゼロから再構築する
+
+## 環境構築
+
+### apm
+
+- `apm install --frozen`
+- `apm audit --ci`
+
+### gh-aw
+
+- Fine-grained PAT を `Public repositories`, `Copilot Requests: Read` で作成
+  - repoのsettingsからactions向けに `Repository secrets` として `COPILOT_GITHUB_TOKEN` で登録
+- gh-awのmdを変更したとき: `gh-aw compile`, `gh-actions-lock --no-narrow`
+
+### gh actions-lock
+
+- 通常のactions workflowを変更した時: `gh-actions-lock --no-narrow`

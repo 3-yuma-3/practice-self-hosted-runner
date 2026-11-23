@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "apm-p-9e3b901b": {
+      "source": {
+        "source": "directory",
+        "path": "./.agents/plugins"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "code-security-skills@apm-p-9e3b901b": true
+  }
+}
