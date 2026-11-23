@@ -132,6 +132,98 @@ dependencies:
   - path: LICENSE
     source: LICENSE
     hash: sha256:2510b446bc1f0cf9702453075d20cd88631e20e5642658edb7325d9c1eb534f7
+- repo_url: owasp/secure-agent-playbook
+  materialization_repo_url: OWASP/secure-agent-playbook
+  name: code-security-skills
+  host: github.com
+  resolved_commit: 65d4efd2cd0b081d52101e9708792b944e4ddebb
+  resolved_ref: 65d4efd2cd0b081d52101e9708792b944e4ddebb
+  version: 0.2.11
+  virtual_path: plugins/code-security-skills
+  is_virtual: true
+  package_type: marketplace_plugin
+  content_hash: sha256:67858e156c46864104999e1819906cfdf666ffb72706b38b1e76ece73457825e
+  declared_license: CC-BY-4.0
+  carried_licenses:
+  - path: .apm/skills/api-security-review/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: .apm/skills/code-review-security/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: .apm/skills/iac-security-review/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: .apm/skills/mobile-code-review/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: .apm/skills/prd-securability-enhancement/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: .apm/skills/sca-audit/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: .apm/skills/secrets-scan/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: .apm/skills/securability-engineering-review/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: .apm/skills/securability-engineering/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: .apm/skills/security-guidance/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: .apm/skills/web-security-review/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/api-security-review/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/code-review-security/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/iac-security-review/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/mobile-code-review/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/prd-securability-enhancement/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/sca-audit/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/secrets-scan/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/securability-engineering-review/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/securability-engineering/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/security-guidance/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  - path: skills/web-security-review/LICENSE.md
+    source: LICENSE.md
+    hash: sha256:a6ef5f90d5f4d6df60f02545fd1b2c05f7108a690af0f914098ffa0f7025dca1
+  native_plugin:
+    name: code-security-skills
+    root: .agents/plugins/code-security-skills
+    fingerprint: sha256:4dbd4ef1bd6ca16ee3392e4e81e4fe53882c367152642378db0637a83a65c1af
+    marketplace:
+      name: apm-p-9e3b901b
+      path: ./.agents/plugins
+  native_declared:
+  - claude
+  - copilot
 deployments:
 - kind: project-relative
   target: claude

@@ -1,0 +1,12 @@
+{
+  "name": "apm-p-9e3b901b",
+  "owner": {
+    "name": "APM"
+  },
+  "plugins": [
+    {
+      "name": "code-security-skills",
+      "source": "./code-security-skills"
+    }
+  ]
+}

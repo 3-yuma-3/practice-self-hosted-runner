@@ -13,6 +13,7 @@ dependencies:
   apm:
     - github/gh-actions-lock/skills/gh-actions-lock#v0.5.1
     - cloudflare/security-audit-skill/skills/security-audit#c1c8a8c1471069fb0e188eeaff69b8e8db6564a8
+    - OWASP/secure-agent-playbook/plugins/code-security-skills#65d4efd2cd0b081d52101e9708792b944e4ddebb
   mcp: []
 includes: auto
 scripts: {}
