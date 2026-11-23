@@ -14,12 +14,10 @@ permissions:
   pull-requests: read
   issues: read
 
-steps:
-  - uses: actions/checkout@v7.0.1
-    with:
-      ref: ${{ github.event.pull_request.base.sha }}
-      persist-credentials: false
+checkout:
+  ref: ${{ github.event.pull_request.base.sha }}
 
+steps:
   - name: Install apm by mise
     uses: jdx/mise-action@v5.2.10
     with:
