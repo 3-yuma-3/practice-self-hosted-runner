@@ -12,6 +12,13 @@ permissions:
 
 # TODO: mainへ未マージの状態で動作確認するために追加。次のPRで削除する
 inlined-imports: true
+tools:
+  github:
+    # 信頼度がnoneに分類されるpr差分を読むため、最低信頼度をデフォルトのapprovedからnoneに緩和
+    min-integrity: none
+    # GitHub MCPの対象をこのrepoに限定
+    allowed-repos:
+      - "3-yuma-3/practice-self-hosted-runner"
 
 safe-outputs:
   create-pull-request-review-comment:
