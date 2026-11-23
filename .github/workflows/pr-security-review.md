@@ -9,6 +9,7 @@ engine: copilot
 permissions:
   contents: read
   pull-requests: read
+  issues: read
 
 # TODO: mainへ未マージの状態で動作確認するために追加。次のPRで削除する
 inlined-imports: true
