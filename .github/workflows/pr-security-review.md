@@ -13,6 +13,9 @@ permissions:
 # TODO: mainへ未マージの状態で動作確認するために追加。次のPRで削除する
 inlined-imports: true
 tools:
+  # find は -exec で別コマンドも実行できるため、含めていない。
+  # git も許可しないので、差分は GitHub MCP から取得する。
+  bash: ["cat", "ls", "grep", "head", "tail", "wc"]
   github:
     # 信頼度がnoneに分類されるpr差分を読むため、最低信頼度をデフォルトのapprovedからnoneに緩和
     min-integrity: none
