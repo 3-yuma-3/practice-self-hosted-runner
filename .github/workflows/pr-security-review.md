@@ -4,7 +4,10 @@ on:
     types: [opened, synchronize]
 
 runs-on: ubuntu-latest
-engine: copilot
+engine:
+  id: copilot
+  model: gpt-6-luna
+  args: ["--reasoning-effort", "max"]
 
 permissions:
   contents: read
