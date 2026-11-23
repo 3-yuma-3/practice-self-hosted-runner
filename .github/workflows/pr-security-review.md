@@ -15,6 +15,17 @@ safe-outputs:
     max: 10
   submit-pull-request-review:
     allowed-events: [COMMENT]
+  create-issue: false
+  report-failure-as-issue: false
+  report-failed-jobs: false
+  report-incomplete:
+    create-issue: false
+  report-missing-tool:
+    create-issue: false
+  report-missing-data:
+    create-issue: false
+  threat-detection:
+    report-as-issue: false
 ---
 
 # PR Security Review
