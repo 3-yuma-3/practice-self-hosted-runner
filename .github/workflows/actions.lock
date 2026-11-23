@@ -17,6 +17,9 @@ workflows:
         - 'github/codeql-action@v4.39.4'
     '.github/workflows/debian-sample.yml':
         - 'actions/checkout@v7.0.1'
+    '.github/workflows/gh-actions-lock-verify.yaml':
+        - 'actions/checkout@v7.0.1'
+        - 'jdx/mise-action@v5.2.10'
     '.github/workflows/kubescape-helm.yaml':
         - 'actions/checkout@v7.0.1'
         - 'jdx/mise-action@v5.2.10'
