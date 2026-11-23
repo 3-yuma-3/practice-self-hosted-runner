@@ -7,10 +7,11 @@ author: 3-yuma-3
 # > auto-detect from filesystem.
 # Accepted values: agent-skills, antigravity, claude, codex, copilot, cursor, gemini, grok-bot, grok-build, hermes, kiro, opencode, windsurf
 targets:
-- claude
-- copilot
+  - claude
+  - copilot
 dependencies:
-  apm: []
+  apm:
+    - github/gh-actions-lock/skills/gh-actions-lock#v0.5.1
   mcp: []
 includes: auto
 scripts: {}

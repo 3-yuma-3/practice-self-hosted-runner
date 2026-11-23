@@ -1,16 +1,16 @@
 ---
-description: |
-    Locks and verifies GitHub Actions workflow dependencies with gh-actions-lock. Use when onboarding a repository to .github/workflows/actions.lock, fixing or relocking the lockfile, verifying it in CI, reading its findings, or whenever a user mentions actions.lock, gh actions-lock, or pinning workflow dependencies.
+name: gh-actions-lock
+description: >
+  Locks and verifies GitHub Actions workflow dependencies with gh-actions-lock.
+  Use when onboarding a repository to .github/workflows/actions.lock, fixing or
+  relocking the lockfile, verifying it in CI, reading its findings, or whenever a
+  user mentions actions.lock, gh actions-lock, or pinning workflow dependencies.
 license: MIT
 metadata:
-    author: github
-    github-path: skills/gh-actions-lock
-    github-ref: refs/tags/v0.5.1
-    github-repo: https://github.com/github/gh-actions-lock
-    github-tree-sha: 3c24678b0d27fc3ea6f51ce0048777f84ff25627
-    version: 0.1.0
-name: gh-actions-lock
+  author: github
+  version: "0.1.0"
 ---
+
 # gh-actions-lock
 
 `gh actions-lock` is a [GitHub CLI](https://cli.github.com/) extension that pins every direct and
