@@ -10,6 +10,9 @@ permissions:
   contents: read
   pull-requests: read
 
+# TODO: mainへ未マージの状態で動作確認するために追加。次のPRで削除する
+inlined-imports: true
+
 safe-outputs:
   create-pull-request-review-comment:
     max: 10
