@@ -41,7 +41,7 @@
 
 - Fine-grained PAT を `Public repositories`, `Copilot Requests: Read` で作成
   - repoのsettingsからactions向けに `Repository secrets` として `COPILOT_GITHUB_TOKEN` で登録
-- gh-awのmdを変更したとき: `gh-aw compile ${gh aw workflowファイル名}`, `gh-actions-lock --no-narrow`
+- gh-awのmdを変更したとき: `gh-aw compile`, `gh-actions-lock --no-narrow`
 
 ### gh actions-lock
 
