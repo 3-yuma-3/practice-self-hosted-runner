@@ -20,7 +20,7 @@ tools:
   github:
     # 信頼度がnoneに分類されるpr差分を読むため、最低信頼度をデフォルトのapprovedからnoneに緩和
     min-integrity: none
-    # GitHub MCPの対象をこのrepoに限定
+    # GitHub MCPの対象をこのrepoに限定、したいがpublic repoではgh awの内部実装により上書きされるため効かない
     allowed-repos:
       - "3-yuma-3/practice-self-hosted-runner"
 
