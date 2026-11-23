@@ -1,0 +1,87 @@
+lockfile_version: '4'
+apm_version: 0.38.0
+manifest_targets:
+- claude
+- copilot
+dependencies:
+- repo_url: github/gh-actions-lock
+  name: gh-actions-lock
+  host: github.com
+  resolved_commit: d68b1a345a0aa02cf870cd0e0d78418d492d280d
+  resolved_ref: v0.5.1
+  version: unknown
+  virtual_path: skills/gh-actions-lock
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/gh-actions-lock
+  - .agents/skills/gh-actions-lock/LICENSE
+  - .agents/skills/gh-actions-lock/SKILL.md
+  - .claude/skills/gh-actions-lock
+  - .claude/skills/gh-actions-lock/LICENSE
+  - .claude/skills/gh-actions-lock/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/gh-actions-lock/LICENSE: sha256:2510b446bc1f0cf9702453075d20cd88631e20e5642658edb7325d9c1eb534f7
+    .agents/skills/gh-actions-lock/SKILL.md: sha256:7b876f6b5a942e5dffac1c887d6b3ff8edc49eb7f6b6dd352a3df3728581fe5d
+    .claude/skills/gh-actions-lock/LICENSE: sha256:2510b446bc1f0cf9702453075d20cd88631e20e5642658edb7325d9c1eb534f7
+    .claude/skills/gh-actions-lock/SKILL.md: sha256:7b876f6b5a942e5dffac1c887d6b3ff8edc49eb7f6b6dd352a3df3728581fe5d
+  content_hash: sha256:8f0e3cdc2ae7a1d6786167beb2a43733628327c75e4785b7f7b9cd8da1cd013b
+  carried_licenses:
+  - path: LICENSE
+    source: LICENSE
+    hash: sha256:2510b446bc1f0cf9702453075d20cd88631e20e5642658edb7325d9c1eb534f7
+deployments:
+- kind: project-relative
+  target: claude
+  value: .claude/skills/gh-actions-lock
+  runtime: null
+  scope: project
+  owners:
+  - github/gh-actions-lock/skills/gh-actions-lock
+  active_owner: github/gh-actions-lock/skills/gh-actions-lock
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/gh-actions-lock/LICENSE
+  runtime: null
+  scope: project
+  owners:
+  - github/gh-actions-lock/skills/gh-actions-lock
+  active_owner: github/gh-actions-lock/skills/gh-actions-lock
+  content_hash: sha256:2510b446bc1f0cf9702453075d20cd88631e20e5642658edb7325d9c1eb534f7
+- kind: project-relative
+  target: claude
+  value: .claude/skills/gh-actions-lock/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - github/gh-actions-lock/skills/gh-actions-lock
+  active_owner: github/gh-actions-lock/skills/gh-actions-lock
+  content_hash: sha256:7b876f6b5a942e5dffac1c887d6b3ff8edc49eb7f6b6dd352a3df3728581fe5d
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/gh-actions-lock
+  runtime: null
+  scope: project
+  owners:
+  - github/gh-actions-lock/skills/gh-actions-lock
+  active_owner: github/gh-actions-lock/skills/gh-actions-lock
+  content_hash: null
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/gh-actions-lock/LICENSE
+  runtime: null
+  scope: project
+  owners:
+  - github/gh-actions-lock/skills/gh-actions-lock
+  active_owner: github/gh-actions-lock/skills/gh-actions-lock
+  content_hash: sha256:2510b446bc1f0cf9702453075d20cd88631e20e5642658edb7325d9c1eb534f7
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/gh-actions-lock/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - github/gh-actions-lock/skills/gh-actions-lock
+  active_owner: github/gh-actions-lock/skills/gh-actions-lock
+  content_hash: sha256:7b876f6b5a942e5dffac1c887d6b3ff8edc49eb7f6b6dd352a3df3728581fe5d

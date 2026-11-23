@@ -1,0 +1,17 @@
+name: practice-self-hosted-runner
+version: 1.0.0
+description: APM project for practice-self-hosted-runner
+author: 3-yuma-3
+# Which agent platforms to deploy to.
+# Resolution order: --target flag > this field > 'apm config set target'
+# > auto-detect from filesystem.
+# Accepted values: agent-skills, antigravity, claude, codex, copilot, cursor, gemini, grok-bot, grok-build, hermes, kiro, opencode, windsurf
+targets:
+  - claude
+  - copilot
+dependencies:
+  apm:
+    - github/gh-actions-lock/skills/gh-actions-lock#v0.5.1
+  mcp: []
+includes: auto
+scripts: {}

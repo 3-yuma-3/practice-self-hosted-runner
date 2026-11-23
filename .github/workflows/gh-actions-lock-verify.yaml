@@ -1,0 +1,32 @@
+---
+name: gh-actions-lock-verify
+
+"on":
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  gh-actions-lock-verify:
+    runs-on: arc-runner-basic
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install gh by mise
+        uses: jdx/mise-action@v5.2.10
+        with:
+          install_args: "gh"
+
+      - name: Install gh-actions-lock
+        run: gh extension install github/gh-actions-lock --pin v0.5.1
+
+      - name: Verify gh actions-lock
+        run: gh actions-lock --verify

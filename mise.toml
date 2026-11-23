@@ -17,4 +17,5 @@ regal = "0.43.0"
 "aqua:kubescape/kubescape" = "4.0.17"
 yq = "4.54.2"
 
-pinact = "5.0.1"
+gh = "2.105.0"
+apm = "0.38.0"
