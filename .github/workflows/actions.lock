@@ -11,7 +11,7 @@ workflows:
         - 'actions/upload-artifact@v7.0.2'
         - 'docker/bake-action@v7.5.0'
         - 'docker/setup-buildx-action@v4.4.1'
-        - 'jdx/mise-action@v5.2.10'
+        - 'jdx/mise-action@v5.3.0'
     '.github/workflows/codeql.yaml':
         - 'actions/checkout@v7.0.1'
         - 'github/codeql-action@v4.39.4'
@@ -19,13 +19,13 @@ workflows:
         - 'actions/checkout@v7.0.1'
     '.github/workflows/gh-actions-lock-verify.yaml':
         - 'actions/checkout@v7.0.1'
-        - 'jdx/mise-action@v5.2.10'
+        - 'jdx/mise-action@v5.3.0'
     '.github/workflows/kubescape-helm.yaml':
         - 'actions/checkout@v7.0.1'
-        - 'jdx/mise-action@v5.2.10'
+        - 'jdx/mise-action@v5.3.0'
     '.github/workflows/kubescape-k8s.yaml':
         - 'actions/checkout@v7.0.1'
-        - 'jdx/mise-action@v5.2.10'
+        - 'jdx/mise-action@v5.3.0'
     '.github/workflows/mdlint.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-node@v7.1.0'
@@ -105,9 +105,9 @@ dependencies:
         commit: 'sha1-1bd86f2fdb4b86187fa4059f16f31a3202acc9ea'
         owner_id: 9919
         repo_id: 259445878
-    'jdx/mise-action@v5.2.10':
-        ref: 'v5.2.10'
-        commit: 'sha1-90f833d396d0cc3674b631d2d225e306476c303a'
+    'jdx/mise-action@v5.3.0':
+        ref: 'v5.3.0'
+        commit: 'sha1-924e7c586e33d7d4bae9c14e26c5d22e2beb6e78'
         owner_id: 216188
         repo_id: 738284564
     'ruby/setup-ruby@v1.343.0':
