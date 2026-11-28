@@ -23,7 +23,7 @@ jobs:
 
       # kubescape提供のactionはdocker daemonが必要なので使えない
       - name: Install helm by mise
-        uses: jdx/mise-action@v5.2.10
+        uses: jdx/mise-action@v5.3.0
         with:
           install_args: "aqua:kubescape/kubescape helm yq"
 
@@ -80,7 +80,7 @@ jobs:
 
       # kubescape提供のactionはdocker daemonが必要なので使えない
       - name: Install helm by mise
-        uses: jdx/mise-action@v5.2.10
+        uses: jdx/mise-action@v5.3.0
         with:
           install_args: "aqua:kubescape/kubescape helm yq"
 
@@ -130,7 +130,7 @@ jobs:
 
       # kubescape提供のactionはdocker daemonが必要なので使えない
       - name: Install helm by mise
-        uses: jdx/mise-action@v5.2.10
+        uses: jdx/mise-action@v5.3.0
         with:
           install_args: "aqua:kubescape/kubescape helm yq"
 
